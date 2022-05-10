@@ -7,4 +7,5 @@ type RegisterUserDTO struct {
 	Email    string `json:"email" form:"email" binding:"required"`
 	NomorHP  string `json:"nomor_hp" form:"nomor_hp" binding:"required"`
 	Password string `json:"password" form:"password" binding:"required"`
+	Role     string `json:"role" form:"role" binding:"required"`
 }

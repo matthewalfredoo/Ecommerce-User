@@ -33,7 +33,6 @@ func (db *userRepository) IsDuplicateEmail(email string) (conn *gorm.DB) {
 // InsertUser is invoked when a user registers an account
 func (db *userRepository) InsertUser(user model.User) model.User {
 	user.Password = hashAndSalt([]byte(user.Password))
-	user.Role = "customer"
 	db.connection.Save(&user)
 	return user
 }

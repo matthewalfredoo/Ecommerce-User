@@ -2,6 +2,7 @@ package conn
 
 import (
 	"Ecommerce-User/model"
+	"errors"
 	"fmt"
 	"github.com/joho/godotenv"
 	"gorm.io/driver/mysql"
@@ -24,7 +25,42 @@ func SetupDatabaseConnection() *gorm.DB {
 	if err != nil {
 		panic("Failed to connect to database")
 	}
-	db.AutoMigrate(&model.User{})
+	if err = db.AutoMigrate(&model.User{}); err == nil && db.Migrator().HasTable(&model.User{}) {
+		if err := db.First(&model.User{}).Error; errors.Is(err, gorm.ErrRecordNotFound) {
+			db.Create(&model.User{
+				Nama:     "Risky Saputra",
+				Alamat:   "Jl. Kebon Jeruk No. 1",
+				Email:    "risky@gmail.com",
+				NomorHP:  "081212121212",
+				Password: "12345678",
+				Role:     "seller",
+			})
+			db.Create(&model.User{
+				Nama:     "Kevin Nainggolan",
+				Alamat:   "Jl. Kebon Jeruk No. 3",
+				Email:    "kevin@gmail.com",
+				NomorHP:  "081212121313",
+				Password: "12345678",
+				Role:     "seller",
+			})
+			db.Create(&model.User{
+				Nama:     "Ricky Metal",
+				Alamat:   "Jl. Kebon Jeruk No. -1",
+				Email:    "ricky@gmail.com",
+				NomorHP:  "081212122390",
+				Password: "12345678",
+				Role:     "seller",
+			})
+			db.Create(&model.User{
+				Nama:     "Rut Ferwati Feronika Scintya Leonardo Sitepu",
+				Alamat:   "Jl. Kebon Jeruk No. 1000",
+				Email:    "ferwati@gmail.com",
+				NomorHP:  "08116161669",
+				Password: "12345678",
+				Role:     "customer",
+			})
+		}
+	}
 	return db
 }
 
