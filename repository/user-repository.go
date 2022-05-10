@@ -11,7 +11,7 @@ type UserRepository interface {
 	FindByEmail(email string) model.User
 	IsDuplicateEmail(email string) (conn *gorm.DB)
 	InsertUser(user model.User) model.User
-	VerifyCredential(email string, password string) interface{}
+	VerifyCredential(email string) interface{}
 	UpdateUser(user model.User) model.User
 	ProfileUser(userID string) model.User
 }
@@ -45,7 +45,7 @@ func (db *userRepository) FindByEmail(email string) model.User {
 
 // VerifyCredential is invoked when a user logs in
 // This function checks if the email exists in the database
-func (db *userRepository) VerifyCredential(email string, password string) interface{} {
+func (db *userRepository) VerifyCredential(email string) interface{} {
 	var user model.User
 	res := db.connection.Where("email = ?", email).Take(&user)
 	if res.Error == nil {
