@@ -32,7 +32,7 @@ func (db *userRepository) IsDuplicateEmail(email string) (conn *gorm.DB) {
 
 // InsertUser is invoked when a user registers an account
 func (db *userRepository) InsertUser(user model.User) model.User {
-	user.Password = hashAndSalt([]byte(user.Password))
+	user.Password = HashAndSalt([]byte(user.Password))
 	db.connection.Save(&user)
 	return user
 }
@@ -66,7 +66,7 @@ func (db *userRepository) UpdateUser(user model.User) model.User {
 	db.connection.Find(&tempUser, user.ID)
 
 	if user.Password != "" {
-		user.Password = hashAndSalt([]byte(user.Password))
+		user.Password = HashAndSalt([]byte(user.Password))
 	} else {
 		user.Password = tempUser.Password
 	}
@@ -76,7 +76,7 @@ func (db *userRepository) UpdateUser(user model.User) model.User {
 	return user
 }
 
-func hashAndSalt(pwd []byte) string {
+func HashAndSalt(pwd []byte) string {
 	hash, err := bcrypt.GenerateFromPassword(pwd, bcrypt.MinCost)
 	if err != nil {
 		log.Print(err)
