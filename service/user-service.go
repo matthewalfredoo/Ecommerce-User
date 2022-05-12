@@ -48,7 +48,7 @@ func (service *userService) Register(user dto.RegisterUserDTO) model.User {
 }
 
 func (service *userService) Login(user dto.LoginUserDTO) model.User {
-	res := service.userRepository.VerifyCredential(user.Email, user.Password)
+	res := service.userRepository.VerifyCredential(user.Email)
 	if v, ok := res.(model.User); ok {
 		comparePassword := comparePassword(v.Password, []byte(user.Password))
 		if v.Email == user.Email && comparePassword {
