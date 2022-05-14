@@ -7,6 +7,7 @@ import (
 	"Ecommerce-User/service"
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
+	"os"
 )
 
 var (
@@ -29,7 +30,7 @@ func main() {
 		routes.GET("/profile", userController.Profile)
 	}
 
-	err := router.Run("192.168.100.8:8080")
+	err := router.Run(os.Getenv("BASE_URL_USER"))
 	if err != nil {
 		return
 	}
