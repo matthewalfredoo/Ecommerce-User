@@ -60,7 +60,7 @@ func (controller *userController) Login(context *gin.Context) {
 	}
 	user := controller.userService.Login(loginUserDTO)
 	if user.ID == 0 {
-		response := helper.BuildErrorResponse("Failed to process request", "Email or password is incorrect", helper.EmptyObj{})
+		response := helper.BuildErrorResponse("Email or password is incorrect", "Failed to process request", helper.EmptyObj{})
 		context.JSON(http.StatusUnauthorized, response)
 		return
 	}
